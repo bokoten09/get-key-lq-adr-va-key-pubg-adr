@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kho Key Tự Động - Phong</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px; background: #f0f2f5; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .game-card { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: left; }
+        .game-card h3 { margin-top: 0; color: #ff4757; }
+        .btn-get { padding: 10px 20px; background: #ff4757; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn-get:hover { background: #ff6b81; }
+        .btn-open { background: #2ed573 !important; display: inline-block; text-decoration: none; text-align: center; margin-top: 10px; }
+        .btn-open:hover { background: #7bed9f !important; }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; text-align: center; background: #f9f9f9; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <h2>⚡ Kho Key Tự Động - Đại Lý Phong ⚡</h2>
+    <p>Chọn phiên bản game bên dưới để tiến hành lấy link rút gọn qua hệ thống của bạn.</p>
+
+    <!-- PHẦN 1: LIÊN QUÂN ANDROID -->
+    <div class="game-card">
+        <h3>🎮 Liên Quân Kín Tuni - Android (KEY 24H)</h3>
+        <p>Trạng thái: <span style="color: green; font-weight: bold;">• Sẵn sàng cấp key</span></p>
+        
+        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'lq')">TẠO LINK VƯỢT LINK LIÊN QUÂN</button>
+        
+        <div id="result-lq" class="hidden">
+            <input type="text" id="link-lq" readonly />
+            <a id="open-lq" href="#" target="_blank">
+                <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- PHẦN 2: PUBG ANDROID -->
+    <div class="game-card">
+        <h3>🎮 Pubg Android Tuni - (KEY 24H)</h3>
+        <p>Trạng thái: <span style="color: green; font-weight: bold;">• Sẵn sàng cấp key</span></p>
+        
+        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'pubg')">TẠO LINK VƯỢT LINK PUBG</button>
+        
+        <div id="result-pubg" class="hidden">
+            <input type="text" id="link-pubg" readonly />
+            <a id="open-pubg" href="#" target="_blank">
+                <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+async function createLink(gameType, prefix) {
+    const btn = document.getElementById(`btn-${prefix}`);
+    btn.innerText = "Đang xử lý...";
+    btn.disabled = true;
+
+    try {
+        // 1. Gọi API gốc từ web của ông bạn (giả lập thao tác tạo link của họ)
+        // Lưu ý: Tuỳ thuộc vào backend web ông bạn nhận tham số gì (ví dụ: game=lienquan hoặc game=pubg)
+        let responseFromFriend = await fetch('https://getkeymafia.online/getkey/phong/api/create-link', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: gameType }) 
+        });
+        
+        let friendData = await responseFromFriend.json();
+        let originalLink = friendData.link; // Link gốc trả về (VD: https://link3s.top/...)
+
+        // 2. Gọi API rút gọn của bạn (Trafficso1)[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key của bạn[cite: 4]
+        let apiUrl = `https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=${apiKey}&url=${encodeURIComponent(originalLink)}`;[cite: 4]
+
+        let trafficRes = await fetch(apiUrl);
+        let trafficData = await trafficRes.json();
+        
+        // trafficData trả về cấu trúc: {"id": "DHS3DCM", "url": "...", "remaining": 999}[cite: 4]
+        let domainRutGon = "https://trafficso1.com/"; // Thay domain trang rút gọn của bạn vào đây
+        let myShortLink = domainRutGon + trafficData.id;
+
+        // 3. Hiển thị kết quả ra giao diện tương ứng
+        document.getElementById(`link-${prefix}`).value = myShortLink;
+        document.getElementById(`open-${prefix}`).href = myShortLink;
+        document.getElementById(`result-${prefix}`).classList.remove('hidden');
+        btn.classList.add('hidden');
+
+    } catch (error) {
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+        console.error(error);
+        btn.innerText = "TẠO LINK VƯỢT LINK";
+        btn.disabled = false;
+    }
+}
+</script>
+
+</body>
+</html>
