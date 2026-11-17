@@ -171,27 +171,27 @@
 <body>
 
 <div class="container">
-    <h2>Kho Key Trực Tuyến</h2>
-    <div class="subtitle">Hệ thống cấp key tự động - Đại lý Nguyen Bang</div>
+    <h2>Kho Key Truc Tuyen</h2>
+    <div class="subtitle">He thong cap key tu dong - Dai ly Nguyen Bang</div>
 
     <div class="game-card">
-        <div class="game-title">Liên Quân Kín Tuni - Android (KEY 24H)</div>
+        <div class="game-title">Lien Quan Kin Tuni - Android (KEY 24H)</div>
         <div class="limit-box">
-            <span class="status-text">Sẵn sàng cấp key</span>
-            <span class="limit-count" id="text-limit-lq">5 / 5 lượt</span>
+            <span class="status-text">San sang cap key</span>
+            <span class="limit-count" id="text-limit-lq">5 / 5 luot</span>
         </div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-lq" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'Lien Quan Kint - Android (KEY 24H)')">TAO LINK VUOT LINK LIEN QUAN</button>
+        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'Lien Quan Kin Tuni - Android (KEY 24H)')">TAO LINK VUOT LINK LIEN QUAN</button>
     </div>
 
     <div class="game-card">
         <div class="game-title">Pubg Android Tuni - (KEY 24H)</div>
         <div class="limit-box">
-            <span class="status-text">Sẵn sàng cấp key</span>
-            <span class="limit-count" id="text-limit-pubg">5 / 5 lượt</span>
+            <span class="status-text">San sang cap key</span>
+            <span class="limit-count" id="text-limit-pubg">5 / 5 luot</span>
         </div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-pubg" style="width: 100%;"></div>
@@ -288,10 +288,8 @@ async function createLink(gameType, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        // Link gốc của trang dịch vụ đối tác
         let rawTargetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        // Rút gọn trực tiếp thông qua API Gtrafficso1 của bạn[cite: 4]
         let apiKey = "dab50e1a937742498aebd160bd7c13d5";[cite: 4]
         let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(rawTargetLink);[cite: 4]
 
