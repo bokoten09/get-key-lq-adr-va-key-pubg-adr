@@ -222,7 +222,6 @@
 </div>
 
 <script>
-// Đã bọc try...catch để tự động dọn sạch localStorage nếu bị lỗi cú pháp cũ
 function getStorageData() {
     let today = new Date().toISOString().slice(0, 10);
     let raw = localStorage.getItem('key_limits');
@@ -295,8 +294,13 @@ async function createLqLink() {
         let formData = new FormData();
         formData.append('type', 'lienquan');
 
+        // Thêm headers Origin và Referer để vượt lỗi 403 Forbidden
         let responseFromFriend = await fetch(proxyUrl, {
             method: 'POST',
+            headers: {
+                'Origin': 'https://getkeymafia.online',
+                'Referer': 'https://getkeymafia.online/getkey/phong/'
+            },
             body: formData
         });
         
@@ -358,8 +362,13 @@ async function createPubgLink() {
         let formData = new FormData();
         formData.append('type', 'pubg');
 
+        // Thêm headers Origin và Referer để vượt lỗi 403 Forbidden
         let responseFromFriend = await fetch(proxyUrl, {
             method: 'POST',
+            headers: {
+                'Origin': 'https://getkeymafia.online',
+                'Referer': 'https://getkeymafia.online/getkey/phong/'
+            },
             body: formData
         });
         
