@@ -185,7 +185,7 @@
             <div class="progress-bar" id="progress-lq" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'lq', 'Liên Quân Kín Tuni - Android (KEY 24H)')">TẠO LINK VƯỢT LINK LIÊN QUÂN 🌸</button>
+        <button id="btn-lq" class="btn-get" onclick="createLqLink()">TẠO LINK VƯỢT LINK LIÊN QUÂN 🌸</button>
     </div>
 
     <!-- PHẦN 2: PUBG ANDROID -->
@@ -199,7 +199,7 @@
             <div class="progress-bar" id="progress-pubg" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'pubg', 'Pubg Android Tuni - Key 24H')">TẠO LINK VƯỢT LINK PUBG 🌸</button>
+        <button id="btn-pubg" class="btn-get" onclick="createPubgLink()">TẠO LINK VƯỢT LINK PUBG 🌸</button>
     </div>
 </div>
 
@@ -269,9 +269,11 @@ function updateUI() {
 
 updateUI();
 
-// --- XỬ LÝ GỌI API AN TOÀN (CORS PROXY + GTRAFFICSO1) ---
-async function createLink(gameType, prefix, gameDisplayName) {
-    let gameKey = (prefix === 'lq') ? 'lienquan' : 'pubg';
+// --- HÀM TẠO LINK RIÊNG CHO LIÊN QUÂN ---
+async function createLqLink() {
+    let gameKey = 'lienquan';
+    let prefix = 'lq';
+    let gameDisplayName = 'Liên Quân Kín Tuni - Android (KEY 24H)';
     let remaining = checkAndUpdateLimit(gameKey);
 
     if (remaining <= 0) {
@@ -288,7 +290,7 @@ async function createLink(gameType, prefix, gameDisplayName) {
         let proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://getkeymafia.online/ajax/create_shorterlink.php');
         
         let formData = new FormData();
-        formData.append('type', gameType);
+        formData.append('type', 'lienquan');
 
         let responseFromFriend = await fetch(proxyUrl, {
             method: 'POST',
@@ -312,7 +314,71 @@ async function createLink(gameType, prefix, gameDisplayName) {
             throw new Error("Lỗi rút gọn link Gtrafficso1!");
         }
 
-        let domainRutGon = "https://trafficso1.com/"; // Domain rút gọn của bạn
+        let domainRutGon = "https://trafficso1.com/"; 
+        let myShortLink = domainRutGon + trafficData.id;
+
+        decreaseLimit(gameKey);
+
+        document.getElementById('modal-game-name').innerText = gameDisplayName;
+        document.getElementById('final-link-input').value = myShortLink;
+        document.getElementById('btn-open-link').href = myShortLink;
+        document.getElementById('successModal').classList.remove('hidden');
+
+    } catch (error) {
+        alert("Có lỗi kết nối hệ thống, vui lòng thử lại!");
+        console.error(error);
+    } finally {
+        btn.innerText = oldText;
+        btn.disabled = false;
+    }
+}
+
+// --- HÀM TẠO LINK RIÊNG CHO PUBG ---
+async function createPubgLink() {
+    let gameKey = 'pubg';
+    let prefix = 'pubg';
+    let gameDisplayName = 'Pubg Android Tuni - Key 24H';
+    let remaining = checkAndUpdateLimit(gameKey);
+
+    if (remaining <= 0) {
+        alert("Bạn đã hết 5 lượt get key cho game này trong ngày hôm nay!");
+        return;
+    }
+
+    const btn = document.getElementById('btn-' + prefix);
+    let oldText = btn.innerText;
+    btn.innerText = "Đang xử lý...";
+    btn.disabled = true;
+
+    try {
+        let proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://getkeymafia.online/ajax/create_shorterlink.php');
+        
+        let formData = new FormData();
+        formData.append('type', 'pubg');
+
+        let responseFromFriend = await fetch(proxyUrl, {
+            method: 'POST',
+            body: formData
+        });
+        
+        let friendData = await responseFromFriend.json();
+        let originalLink = friendData.link; 
+
+        if (!originalLink) {
+            throw new Error("Không nhận được link từ server!");
+        }
+
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key Gtrafficso1 của bạn[cite: 4]
+        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);[cite: 4]
+
+        let trafficRes = await fetch(apiUrl);
+        let trafficData = await trafficRes.json();
+        
+        if (!trafficData.id) {
+            throw new Error("Lỗi rút gọn link Gtrafficso1!");
+        }
+
+        let domainRutGon = "https://trafficso1.com/"; 
         let myShortLink = domainRutGon + trafficData.id;
 
         decreaseLimit(gameKey);
