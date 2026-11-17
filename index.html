@@ -2,34 +2,123 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Kho Key Tự Động - Phong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Key Trực Tuyến - Đại Lý Phong</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px; background: #f0f2f5; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .game-card { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: left; }
-        .game-card h3 { margin-top: 0; color: #ff4757; }
-        .btn-get { padding: 10px 20px; background: #ff4757; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; width: 100%; transition: 0.2s; }
-        .btn-get:hover { background: #ff6b81; }
-        .btn-open { background: #2ed573 !important; display: inline-block; text-decoration: none; text-align: center; margin-top: 10px; }
-        .btn-open:hover { background: #7bed9f !important; }
-        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; text-align: center; background: #f9f9f9; }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 500px; 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #ff4757; 
+            margin-bottom: 5px; 
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .game-card { 
+            background: #fff; 
+            border: 1px solid #eee;
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+            transition: 0.3s;
+        }
+        .game-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .game-card h3 { 
+            margin-top: 0; 
+            color: #2f3542; 
+            font-size: 18px;
+        }
+        .status {
+            font-size: 13px;
+            color: #2ed573;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .btn-get { 
+            padding: 12px 20px; 
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 15px; 
+            font-weight: bold; 
+            width: 100%; 
+            transition: 0.2s; 
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+        }
+        .btn-get:hover { 
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-open { 
+            background: linear-gradient(135deg, #2ed573 0%, #7bed9f 100%) !important; 
+            box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3) !important;
+            margin-top: 10px; 
+            text-decoration: none; 
+            display: block;
+            text-align: center;
+        }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            text-align: center; 
+            background: #f9f9f9; 
+            font-size: 14px;
+            color: #333;
+        }
         .hidden { display: none; }
+        .success-text {
+            color: #2ed573; 
+            font-weight: bold; 
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>⚡ Kho Key Tự Động - Đại Lý Phong ⚡</h2>
-    <p>Chọn phiên bản game bên dưới để tiến hành lấy link rút gọn qua hệ thống của bạn.</p>
+    <h2>⚡ Kho Key Trực Tuyến ⚡</h2>
+    <div class="subtitle">Hệ thống cấp key tự động - Đại lý Phong</div>
 
     <!-- PHẦN 1: LIÊN QUÂN ANDROID -->
     <div class="game-card">
         <h3>🎮 Liên Quân Kín Tuni - Android (KEY 24H)</h3>
-        <p>Trạng thái: <span style="color: green; font-weight: bold;">• Sẵn sàng cấp key</span></p>
+        <div class="status">• Sẵn sàng cấp key</div>
         
-        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'lq')">TẠO LINK VƯỢT LINK LIÊN QUÂN</button>
+        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'lq')">TẠO LINK VƯỢT LINK LIÊN QUÂN 🌸</button>
         
         <div id="result-lq" class="hidden">
+            <div class="success-text">🎉 Tạo Link Thành Công!</div>
             <input type="text" id="link-lq" readonly />
             <a id="open-lq" href="#" target="_blank">
                 <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
@@ -40,11 +129,12 @@
     <!-- PHẦN 2: PUBG ANDROID -->
     <div class="game-card">
         <h3>🎮 Pubg Android Tuni - (KEY 24H)</h3>
-        <p>Trạng thái: <span style="color: green; font-weight: bold;">• Sẵn sàng cấp key</span></p>
+        <div class="status">• Sẵn sàng cấp key</div>
         
-        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'pubg')">TẠO LINK VƯỢT LINK PUBG</button>
+        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'pubg')">TẠO LINK VƯỢT LINK PUBG 🌸</button>
         
         <div id="result-pubg" class="hidden">
+            <div class="success-text">🎉 Tạo Link Thành Công!</div>
             <input type="text" id="link-pubg" readonly />
             <a id="open-pubg" href="#" target="_blank">
                 <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
@@ -60,8 +150,7 @@ async function createLink(gameType, prefix) {
     btn.disabled = true;
 
     try {
-        // 1. Gọi API gốc từ web của ông bạn (giả lập thao tác tạo link của họ)
-        // Lưu ý: Tuỳ thuộc vào backend web ông bạn nhận tham số gì (ví dụ: game=lienquan hoặc game=pubg)
+        // 1. Gọi API gốc từ web của ông bạn để lấy link vượt (link3s, v.v.)
         let responseFromFriend = await fetch('https://getkeymafia.online/getkey/phong/api/create-link', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -69,20 +158,20 @@ async function createLink(gameType, prefix) {
         });
         
         let friendData = await responseFromFriend.json();
-        let originalLink = friendData.link; // Link gốc trả về (VD: https://link3s.top/...)
+        let originalLink = friendData.link; // Link gốc nhận được
 
-        // 2. Gọi API rút gọn của bạn (Trafficso1)[cite: 4]
+        // 2. Gọi API rút gọn của bạn (Trafficso1)
         let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key của bạn[cite: 4]
         let apiUrl = `https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=${apiKey}&url=${encodeURIComponent(originalLink)}`;[cite: 4]
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
-        // trafficData trả về cấu trúc: {"id": "DHS3DCM", "url": "...", "remaining": 999}[cite: 4]
-        let domainRutGon = "https://trafficso1.com/"; // Thay domain trang rút gọn của bạn vào đây
+        // trafficData trả về: {"id": "DHS3DCM", "url": "...", "remaining": 999}[cite: 4]
+        let domainRutGon = "https://trafficso1.com/"; // Domain trang rút gọn của bạn (có thể thay đổi nếu dùng domain riêng)
         let myShortLink = domainRutGon + trafficData.id;
 
-        // 3. Hiển thị kết quả ra giao diện tương ứng
+        // 3. Hiển thị kết quả ra màn hình cho khách
         document.getElementById(`link-${prefix}`).value = myShortLink;
         document.getElementById(`open-${prefix}`).href = myShortLink;
         document.getElementById(`result-${prefix}`).classList.remove('hidden');
@@ -91,7 +180,7 @@ async function createLink(gameType, prefix) {
     } catch (error) {
         alert("Có lỗi xảy ra, vui lòng thử lại!");
         console.error(error);
-        btn.innerText = "TẠO LINK VƯỢT LINK";
+        btn.innerText = `TẠO LINK VƯỢT LINK ${gameType.toUpperCase()} 🌸`;
         btn.disabled = false;
     }
 }
