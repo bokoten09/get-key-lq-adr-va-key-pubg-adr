@@ -288,16 +288,31 @@ async function createLink(gameType, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        let rawTargetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
+        let ajaxUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://getkeymafia.online/ajax/create_shorterlink.php');
+        
+        let formData = new FormData();
+        formData.append('type', gameType);
+
+        let response = await fetch(ajaxUrl, {
+            method: 'POST',
+            body: formData
+        });
+        
+        let data = await response.json();
+        let originalLink = data.link; 
+
+        if (!originalLink) {
+            throw new Error("Khong nhan duoc link tu server!");
+        }
 
         let apiKey = "dab50e1a937742498aebd160bd7c13d5";
-        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(rawTargetLink);
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(originalLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
         if (!trafficData.id) {
-            throw new Error("Loi tao link rut gon!");
+            throw new Error("Loi tao link rut gon Gtrafficso1!");
         }
 
         let domainRutGon = "https://trafficso1.com/"; 
