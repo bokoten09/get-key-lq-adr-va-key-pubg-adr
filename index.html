@@ -222,22 +222,30 @@
 </div>
 
 <script>
-function checkAndUpdateLimit(gameKey) {
+// Đã bọc try...catch để tự động dọn sạch localStorage nếu bị lỗi cú pháp cũ
+function getStorageData() {
     let today = new Date().toISOString().slice(0, 10);
-    let storageData = JSON.parse(localStorage.getItem('key_limits') || '{}');
-
-    if (storageData.date !== today) {
-        storageData = { date: today, lienquan: 5, pubg: 5 };
+    let raw = localStorage.getItem('key_limits');
+    let storageData = null;
+    try {
+        storageData = JSON.parse(raw);
+    } catch (e) {
+        storageData = null;
     }
+    if (!storageData || storageData.date !== today) {
+        storageData = { date: today, lienquan: 5, pubg: 5 };
+        localStorage.setItem('key_limits', JSON.stringify(storageData));
+    }
+    return storageData;
+}
+
+function checkAndUpdateLimit(gameKey) {
+    let storageData = getStorageData();
     return storageData[gameKey];
 }
 
 function decreaseLimit(gameKey) {
-    let today = new Date().toISOString().slice(0, 10);
-    let storageData = JSON.parse(localStorage.getItem('key_limits') || '{}');
-    if (storageData.date !== today) {
-        storageData = { date: today, lienquan: 5, pubg: 5 };
-    }
+    let storageData = getStorageData();
     if (storageData[gameKey] > 0) {
         storageData[gameKey] -= 1;
     }
@@ -320,7 +328,7 @@ async function createLqLink() {
         document.getElementById('successModal').classList.remove('hidden');
 
     } catch (error) {
-        alert("Co loi ket noi he thống, vui long thu lai!");
+        alert("Co loi ket noi he thong, vui long thu lai!");
         console.error(error);
     } finally {
         btn.innerText = oldText;
