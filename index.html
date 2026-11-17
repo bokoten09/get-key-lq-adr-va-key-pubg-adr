@@ -184,7 +184,7 @@
             <div class="progress-bar" id="progress-lq" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-lq" class="btn-get" onclick="createLqLink()">TAO LINK VUOT LINK LIEN QUAN</button>
+        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'Lien Quan Kint - Android (KEY 24H)')">TAO LINK VUOT LINK LIEN QUAN</button>
     </div>
 
     <div class="game-card">
@@ -197,7 +197,7 @@
             <div class="progress-bar" id="progress-pubg" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-pubg" class="btn-get" onclick="createPubgLink()">TAO LINK VUOT LINK PUBG</button>
+        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'Pubg Android Tuni - Key 24H')">TAO LINK VUOT LINK PUBG</button>
     </div>
 </div>
 
@@ -272,10 +272,9 @@ function updateUI() {
 
 updateUI();
 
-async function createLqLink() {
-    let gameKey = 'lienquan';
-    let prefix = 'lq';
-    let gameDisplayName = 'Lien Quan Kint - Android (KEY 24H)';
+async function createLink(gameType, gameDisplayName) {
+    let gameKey = (gameType === 'lienquan') ? 'lienquan' : 'pubg';
+    let prefix = (gameType === 'lienquan') ? 'lq' : 'pubg';
     let remaining = checkAndUpdateLimit(gameKey);
 
     if (remaining <= 0) {
@@ -285,40 +284,20 @@ async function createLqLink() {
 
     const btn = document.getElementById('btn-' + prefix);
     let oldText = btn.innerText;
-    btn.innerText = "Dang xu ly...";
+    btn.innerText = "Dang tao link...";
     btn.disabled = true;
 
     try {
-        // Sử dụng AllOrigins proxy để tránh lỗi 403 Forbidden từ server đối tác
-        let targetUrl = 'https://getkeymafia.online/ajax/create_shorterlink.php';
-        let proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
-        
-        let formData = new URLSearchParams();
-        formData.append('type', 'lienquan');
+        let rawTargetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        let responseFromFriend = await fetch(proxyUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData.toString()
-        });
-        
-        let friendData = await responseFromFriend.json();
-        let originalLink = friendData.link; 
-
-        if (!originalLink) {
-            throw new Error("Khong nhan duoc link tu server!");
-        }
-
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
-        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";[cite: 4]
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(rawTargetLink);[cite: 4]
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
         if (!trafficData.id) {
-            throw new Error("Loi rut gon link Gtrafficso1!");
+            throw new Error("Loi tao link rut gon!");
         }
 
         let domainRutGon = "https://trafficso1.com/"; 
@@ -332,75 +311,7 @@ async function createLqLink() {
         document.getElementById('successModal').classList.remove('hidden');
 
     } catch (error) {
-        alert("Co loi ket noi he thong, vui long thu lai!");
-        console.error(error);
-    } finally {
-        btn.innerText = oldText;
-        btn.disabled = false;
-    }
-}
-
-async function createPubgLink() {
-    let gameKey = 'pubg';
-    let prefix = 'pubg';
-    let gameDisplayName = 'Pubg Android Tuni - Key 24H';
-    let remaining = checkAndUpdateLimit(gameKey);
-
-    if (remaining <= 0) {
-        alert("Ban da het 5 luot get key cho game nay trong hom nay!");
-        return;
-    }
-
-    const btn = document.getElementById('btn-' + prefix);
-    let oldText = btn.innerText;
-    btn.innerText = "Dang xu ly...";
-    btn.disabled = true;
-
-    try {
-        // Sử dụng AllOrigins proxy để tránh lỗi 403 Forbidden từ server đối tác
-        let targetUrl = 'https://getkeymafia.online/ajax/create_shorterlink.php';
-        let proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
-        
-        let formData = new URLSearchParams();
-        formData.append('type', 'pubg');
-
-        let responseFromFriend = await fetch(proxyUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formData.toString()
-        });
-        
-        let friendData = await responseFromFriend.json();
-        let originalLink = friendData.link; 
-
-        if (!originalLink) {
-            throw new Error("Khong nhan duoc link tu server!");
-        }
-
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
-        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);
-
-        let trafficRes = await fetch(apiUrl);
-        let trafficData = await trafficRes.json();
-        
-        if (!trafficData.id) {
-            throw new Error("Loi rut gon link Gtrafficso1!");
-        }
-
-        let domainRutGon = "https://trafficso1.com/"; 
-        let myShortLink = domainRutGon + trafficData.id;
-
-        decreaseLimit(gameKey);
-
-        document.getElementById('modal-game-name').innerText = gameDisplayName;
-        document.getElementById('final-link-input').value = myShortLink;
-        document.getElementById('btn-open-link').href = myShortLink;
-        document.getElementById('successModal').classList.remove('hidden');
-
-    } catch (error) {
-        alert("Co loi ket noi he thong, vui long thu lai!");
+        alert("Co loi xay ra, vui long thu lai!");
         console.error(error);
     } finally {
         btn.innerText = oldText;
