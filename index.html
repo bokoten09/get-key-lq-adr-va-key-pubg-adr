@@ -288,12 +288,10 @@ async function createLink(gameType, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        // Link đích đích thực cần trỏ tới để lấy key
         let targetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        // Gọi trực tiếp API Gtrafficso1 của bạn để rút gọn link đích này[cite: 4]
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5";[cite: 4]
-        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(targetLink);[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(targetLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
