@@ -103,4 +103,92 @@
         .success-text {
             color: #2ed573; 
             font-weight: bold; 
-            font-size: 1
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>⚡ Kho Key Trực Tuyến ⚡</h2>
+    <div class="subtitle">Hệ thống cấp key tự động - Đại lý Nguyen Bang</div>
+
+    <!-- PHẦN 1: LIÊN QUÂN ANDROID -->
+    <div class="game-card">
+        <h3>🎮 Liên Quân Kín Tuni - Android (KEY 24H)</h3>
+        <div class="status">• Sẵn sàng cấp key</div>
+        
+        <button id="btn-lq" class="btn-get" onclick="createLink('lienquan', 'lq')">TẠO LINK VƯỢT LINK LIÊN QUÂN 🌸</button>
+        
+        <div id="result-lq" class="hidden">
+            <div class="success-text">🎉 Tạo Link Thành Công!</div>
+            <input type="text" id="link-lq" readonly />
+            <a id="open-lq" href="#" target="_blank">
+                <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- PHẦN 2: PUBG ANDROID -->
+    <div class="game-card">
+        <h3>🎮 Pubg Android Tuni - (KEY 24H)</h3>
+        <div class="status">• Sẵn sàng cấp key</div>
+        
+        <button id="btn-pubg" class="btn-get" onclick="createLink('pubg', 'pubg')">TẠO LINK VƯỢT LINK PUBG 🌸</button>
+        
+        <div id="result-pubg" class="hidden">
+            <div class="success-text">🎉 Tạo Link Thành Công!</div>
+            <input type="text" id="link-pubg" readonly />
+            <a id="open-pubg" href="#" target="_blank">
+                <button class="btn-get btn-open">MỞ LINK VƯỢT NGAY ➔</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+async function createLink(gameType, prefix) {
+    const btn = document.getElementById(`btn-${prefix}`);
+    btn.innerText = "Đang xử lý...";
+    btn.disabled = true;
+
+    try {
+        // 1. Gọi API gốc từ web của bạn bạn để lấy link vượt (link3s, v.v.)
+        let responseFromFriend = await fetch('https://getkeymafia.online/getkey/phong/api/create-link', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: gameType }) 
+        });
+        
+        let friendData = await responseFromFriend.json();
+        let originalLink = friendData.link; // Link gốc nhận được
+
+        // 2. Gọi API rút gọn của bạn (Trafficso1)
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key của bạn[cite: 4]
+        let apiUrl = `https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=${apiKey}&url=${encodeURIComponent(originalLink)}`;[cite: 4]
+
+        let trafficRes = await fetch(apiUrl);
+        let trafficData = await trafficRes.json();
+        
+        // trafficData trả về: {"id": "DHS3DCM", "url": "...", "remaining": 999}[cite: 4]
+        let domainRutGon = "https://trafficso1.com/"; // Domain trang rút gọn của bạn
+        let myShortLink = domainRutGon + trafficData.id;
+
+        // 3. Hiển thị kết quả ra màn hình cho khách
+        document.getElementById(`link-${prefix}`).value = myShortLink;
+        document.getElementById(`open-${prefix}`).href = myShortLink;
+        document.getElementById(`result-${prefix}`).classList.remove('hidden');
+        btn.classList.add('hidden');
+
+    } catch (error) {
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+        console.error(error);
+        btn.innerText = `TẠO LINK VƯỢT LINK ${gameType.toUpperCase()} 🌸`;
+        btn.disabled = false;
+    }
+}
+</script>
+
+</body>
+</html>
