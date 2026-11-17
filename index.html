@@ -203,7 +203,7 @@
     </div>
 </div>
 
-<!-- MODAL POPUP HIỂN THỊ KHI TẠO LINK THÀNH CÔNG -->
+<!-- MODAL POPUP THÀNH CÔNG -->
 <div id="successModal" class="modal-overlay hidden">
     <div class="modal-box">
         <div class="success-icon">✓</div>
@@ -269,7 +269,7 @@ function updateUI() {
 
 updateUI();
 
-// --- XỬ LÝ LẤY LINK GỐC VÀ TÍCH HỢP GTRAFFICSO1 ---
+// --- XỬ LÝ KẾT HỢP API GỐC VÀ GTRAFFICSO1 ---
 async function createLink(gameType, prefix, gameDisplayName) {
     let gameKey = (prefix === 'lq') ? 'lienquan' : 'pubg';
     let remaining = checkAndUpdateLimit(gameKey);
@@ -285,7 +285,7 @@ async function createLink(gameType, prefix, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        // 1. Gọi API gốc chính xác của ông bạn qua FormData
+        // 1. Lấy link gốc từ web đối tác qua FormData
         let formData = new FormData();
         formData.append('type', gameType);
 
@@ -295,30 +295,30 @@ async function createLink(gameType, prefix, gameDisplayName) {
         });
         
         let friendData = await responseFromFriend.json();
-        let originalLink = friendData.link; // Link gốc nhận được (VD: link3s.top)
+        let originalLink = friendData.link; 
 
         if (!originalLink) {
-            throw new Error("Không lấy được link gốc từ server đối tác!");
+            throw new Error("Không lấy được link gốc từ server!");
         }
 
-        // 2. Tự động quăng link gốc qua API Gtrafficso1 của bạn để rút gọn[cite: 4]
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key của bạn[cite: 4]
-        let apiUrl = `https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=${apiKey}&url=${encodeURIComponent(originalLink)}`;[cite: 4]
+        // 2. Tự động chuyển link gốc qua Gtrafficso1 của bạn để rút gọn và tính tiền
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key của bạn
+        let apiUrl = `https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=${apiKey}&url=${encodeURIComponent(originalLink)}`;
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
         if (!trafficData.id) {
-            throw new Error("Lỗi tạo liên kết rút gọn từ Gtrafficso1!");
+            throw new Error("Lỗi rút gọn link từ Gtrafficso1!");
         }
 
         let domainRutGon = "https://trafficso1.com/"; // Domain rút gọn của bạn
         let myShortLink = domainRutGon + trafficData.id;
 
-        // Trừ 1 lượt sau khi tạo link thành công
+        // 3. Trừ 1 lượt sau khi hoàn tất
         decreaseLimit(gameKey);
 
-        // 3. Hiển thị Popup Modal thành công chứa link Gtraffic
+        // 4. Hiển thị popup chứa link Gtrafficso1 hoàn chỉnh
         document.getElementById('modal-game-name').innerText = gameDisplayName;
         document.getElementById('final-link-input').value = myShortLink;
         document.getElementById('btn-open-link').href = myShortLink;
