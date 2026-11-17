@@ -330,4 +330,19 @@ async function createLink(gameType, prefix, gameDisplayName) {
 
 // Chức năng copy link trong popup
 function copyLink() {
-    let inputElem = document.getElementById('final
+    let inputElem = document.getElementById('final-link-input');
+    inputElem.select();
+    inputElem.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(inputElem.value);
+    alert("Đã sao chép liên kết thành công!");
+}
+
+// Đóng modal và làm mới trang (quay về trang chủ) theo yêu cầu
+function closeModalAndRefresh() {
+    document.getElementById('successModal').classList.add('hidden');
+    window.location.href = "https://bokoten09.github.io/get-key-lq-adr-va-key-pubg-adr/"; 
+}
+</script>
+
+</body>
+</html>
