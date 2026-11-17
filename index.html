@@ -171,45 +171,42 @@
 <body>
 
 <div class="container">
-    <h2>⚡ Kho Key Trực Tuyến ⚡</h2>
+    <h2>Kho Key Trực Tuyến</h2>
     <div class="subtitle">Hệ thống cấp key tự động - Đại lý Nguyen Bang</div>
 
-    <!-- PHẦN 1: LIÊN QUÂN ANDROID -->
     <div class="game-card">
-        <div class="game-title">🎮 Liên Quân Kín Tuni - Android (KEY 24H)</div>
+        <div class="game-title">Liên Quân Kín Tuni - Android (KEY 24H)</div>
         <div class="limit-box">
-            <span class="status-text">🟢 Sẵn sàng cấp key</span>
+            <span class="status-text">Sẵn sàng cấp key</span>
             <span class="limit-count" id="text-limit-lq">5 / 5 lượt</span>
         </div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-lq" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-lq" class="btn-get" onclick="createLqLink()">TẠO LINK VƯỢT LINK LIÊN QUÂN 🌸</button>
+        <button id="btn-lq" class="btn-get" onclick="createLqLink()">TAO LINK VUOT LINK LIEN QUAN</button>
     </div>
 
-    <!-- PHẦN 2: PUBG ANDROID -->
     <div class="game-card">
-        <div class="game-title">🎮 Pubg Android Tuni - (KEY 24H)</div>
+        <div class="game-title">Pubg Android Tuni - (KEY 24H)</div>
         <div class="limit-box">
-            <span class="status-text">🟢 Sẵn sàng cấp key</span>
+            <span class="status-text">Sẵn sàng cấp key</span>
             <span class="limit-count" id="text-limit-pubg">5 / 5 lượt</span>
         </div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-pubg" style="width: 100%;"></div>
         </div>
         <br>
-        <button id="btn-pubg" class="btn-get" onclick="createPubgLink()">TẠO LINK VƯỢT LINK PUBG 🌸</button>
+        <button id="btn-pubg" class="btn-get" onclick="createPubgLink()">TAO LINK VUOT LINK PUBG</button>
     </div>
 </div>
 
-<!-- MODAL POPUP THÀNH CÔNG -->
 <div id="successModal" class="modal-overlay hidden">
     <div class="modal-box">
         <div class="success-icon">✓</div>
-        <div class="modal-title">Tạo Link Thành Công! 🎉</div>
-        <div class="modal-desc" id="modal-game-name">Tên game hiển thị ở đây</div>
-        <div class="modal-desc" style="color: #ad1457; font-weight: 500;">Liên kết đã được gán cho IP của bạn. Vui lòng vượt link để nhận key game.</div>
+        <div class="modal-title">Tao Link Thanh Cong!</div>
+        <div class="modal-desc" id="modal-game-name">Ten game</div>
+        <div class="modal-desc" style="color: #ad1457; font-weight: 500;">Lien ket da duoc gan cho IP cua ban. Vui long vuot link de nhan key.</div>
         
         <div class="link-input-group">
             <input type="text" id="final-link-input" readonly />
@@ -217,10 +214,10 @@
         </div>
 
         <a id="btn-open-link" href="#" target="_blank" class="btn-open-link">
-            🔗 MỞ LINK VƯỢT NGAY 🌸 →
+            MO LINK VUOT NGAY ->
         </a>
 
-        <button class="btn-close-modal" onclick="closeModalAndRefresh()">Đóng và làm mới trang</button>
+        <button class="btn-close-modal" onclick="closeModalAndRefresh()">Dong va lam moi trang</button>
     </div>
 </div>
 
@@ -253,13 +250,13 @@ function updateUI() {
         let gameKey = (prefix === 'lq') ? 'lienquan' : 'pubg';
         let remaining = checkAndUpdateLimit(gameKey);
         
-        document.getElementById('text-limit-' + prefix).innerText = remaining + ' / 5 lượt';
+        document.getElementById('text-limit-' + prefix).innerText = remaining + ' / 5 luot';
         let percent = (remaining / 5) * 100;
         document.getElementById('progress-' + prefix).style.width = percent + '%';
 
         if (remaining <= 0) {
             let btn = document.getElementById('btn-' + prefix);
-            btn.innerText = "ĐÃ HẾT LƯỢT HÔM NAY";
+            btn.innerText = "DA HET LUOT HOM NAY";
             btn.disabled = true;
             btn.style.background = "#ccc";
         }
@@ -271,17 +268,17 @@ updateUI();
 async function createLqLink() {
     let gameKey = 'lienquan';
     let prefix = 'lq';
-    let gameDisplayName = 'Liên Quân Kín Tuni - Android (KEY 24H)';
+    let gameDisplayName = 'Lien Quan Kint - Android (KEY 24H)';
     let remaining = checkAndUpdateLimit(gameKey);
 
     if (remaining <= 0) {
-        alert("Bạn đã hết 5 lượt get key cho game này trong ngày hôm nay!");
+        alert("Ban da het 5 luot get key cho game nay trong hom nay!");
         return;
     }
 
     const btn = document.getElementById('btn-' + prefix);
     let oldText = btn.innerText;
-    btn.innerText = "Đang xử lý...";
+    btn.innerText = "Dang xu ly...";
     btn.disabled = true;
 
     try {
@@ -299,17 +296,17 @@ async function createLqLink() {
         let originalLink = friendData.link; 
 
         if (!originalLink) {
-            throw new Error("Không nhận được link từ server!");
+            throw new Error("Khong nhan duoc link tu server!");
         }
 
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key Gtrafficso1 của bạn[cite: 4]
-        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
+        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
         if (!trafficData.id) {
-            throw new Error("Lỗi rút gọn link Gtrafficso1!");
+            throw new Error("Loi rut gon link Gtrafficso1!");
         }
 
         let domainRutGon = "https://trafficso1.com/"; 
@@ -323,7 +320,7 @@ async function createLqLink() {
         document.getElementById('successModal').classList.remove('hidden');
 
     } catch (error) {
-        alert("Có lỗi kết nối hệ thống, vui lòng thử lại!");
+        alert("Co loi ket noi he thống, vui long thu lai!");
         console.error(error);
     } finally {
         btn.innerText = oldText;
@@ -338,13 +335,13 @@ async function createPubgLink() {
     let remaining = checkAndUpdateLimit(gameKey);
 
     if (remaining <= 0) {
-        alert("Bạn đã hết 5 lượt get key cho game này trong ngày hôm nay!");
+        alert("Ban da het 5 luot get key cho game nay trong hom nay!");
         return;
     }
 
     const btn = document.getElementById('btn-' + prefix);
     let oldText = btn.innerText;
-    btn.innerText = "Đang xử lý...";
+    btn.innerText = "Dang xu ly...";
     btn.disabled = true;
 
     try {
@@ -362,17 +359,17 @@ async function createPubgLink() {
         let originalLink = friendData.link; 
 
         if (!originalLink) {
-            throw new Error("Không nhận được link từ server!");
+            throw new Error("Khong nhan duoc link tu server!");
         }
 
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5"; // API Key Gtrafficso1 của bạn[cite: 4]
-        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
+        let apiUrl = 'https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=' + apiKey + '&url=' + encodeURIComponent(originalLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
         
         if (!trafficData.id) {
-            throw new Error("Lỗi rút gọn link Gtrafficso1!");
+            throw new Error("Loi rut gon link Gtrafficso1!");
         }
 
         let domainRutGon = "https://trafficso1.com/"; 
@@ -386,7 +383,7 @@ async function createPubgLink() {
         document.getElementById('successModal').classList.remove('hidden');
 
     } catch (error) {
-        alert("Có lỗi kết nối hệ thống, vui lòng thử lại!");
+        alert("Co loi ket noi he thong, vui long thu lai!");
         console.error(error);
     } finally {
         btn.innerText = oldText;
@@ -399,7 +396,7 @@ function copyLink() {
     inputElem.select();
     inputElem.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(inputElem.value);
-    alert("Đã sao chép liên kết thành công!");
+    alert("Da sao chep lien ket thanh cong!");
 }
 
 function closeModalAndRefresh() {
