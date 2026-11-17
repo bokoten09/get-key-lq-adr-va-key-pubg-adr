@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Key Trực Tuyến - Đại Lý Nguyen Bang</title>
+    <title>Kho Key Truc Tuyen - Dai Ly Nguyen Bang</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -290,8 +290,8 @@ async function createLink(gameType, gameDisplayName) {
     try {
         let rawTargetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5";[cite: 4]
-        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(rawTargetLink);[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(rawTargetLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
