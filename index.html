@@ -288,25 +288,12 @@ async function createLink(gameType, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        let ajaxUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://getkeymafia.online/ajax/create_shorterlink.php');
-        
-        let formData = new FormData();
-        formData.append('type', gameType);
+        // Link đích đích thực cần trỏ tới để lấy key
+        let targetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        let response = await fetch(ajaxUrl, {
-            method: 'POST',
-            body: formData
-        });
-        
-        let data = await response.json();
-        let originalLink = data.link; 
-
-        if (!originalLink) {
-            throw new Error("Khong nhan duoc link tu server!");
-        }
-
-        let apiKey = "dab50e1a937742498aebd160bd7c13d5";
-        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(originalLink);
+        // Gọi trực tiếp API Gtrafficso1 của bạn để rút gọn link đích này[cite: 4]
+        let apiKey = "dab50e1a937742498aebd160bd7c13d5";[cite: 4]
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(targetLink);[cite: 4]
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
