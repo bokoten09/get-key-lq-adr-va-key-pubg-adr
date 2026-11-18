@@ -288,11 +288,9 @@ async function createLink(gameType, gameDisplayName) {
     btn.disabled = true;
 
     try {
-        // Tạo liên kết đích kèm timestamp ngẫu nhiên để không bị cache link cũ
         let randomParam = new Date().getTime();
         let targetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType + "&t=" + randomParam;
 
-        // Gọi API Gtrafficso1 của bạn tạo ra link rút gọn mới cho mỗi lần bấm
         let apiKey = "dab50e1a937742498aebd160bd7c13d5";
         let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(targetLink);
 
