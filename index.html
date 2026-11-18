@@ -206,7 +206,7 @@
         <div class="success-icon">✓</div>
         <div class="modal-title">Tao Link Thanh Cong!</div>
         <div class="modal-desc" id="modal-game-name">Ten game</div>
-        <div class="modal-desc" style="color: #ad1457; font-weight: 500;">Lien ket dong moi nhat da duoc boc ve va rut gon. Vui long vuot link de nhan key.</div>
+        <div class="modal-desc" style="color: #ad1457; font-weight: 500;">Vui long bam vao lien ket ben duoi de vuot qua tram va nhan key vao game.</div>
         
         <div class="link-input-group">
             <input type="text" id="final-link-input" readonly />
@@ -284,25 +284,16 @@ async function createLink(gameType, gameDisplayName) {
 
     const btn = document.getElementById('btn-' + prefix);
     let oldText = btn.innerText;
-    btn.innerText = "Dang boc link dong...";
+    btn.innerText = "Dang tao link...";
     btn.disabled = true;
 
     try {
-        // 1. Tạo URL đích kèm timestamp để luôn là yêu cầu mới
-        let randomParam = new Date().getTime();
-        let directUrl = "https://getkeymafia.online/getkey/phong/?type=" + gameType + "&t=" + randomParam;
+        // Tạo link đích chuẩn tới phòng của game
+        let targetLink = "https://getkeymafia.online/getkey/phong/?type=" + gameType;
 
-        // 2. Đi qua CORS Proxy công cộng (allorigins) để vượt rào CORS của server gốc
-        let proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(directUrl);
-        let proxyRes = await fetch(proxyUrl);
-        let proxyData = await proxyRes.json();
-
-        // Mặc định dùng link bốc được hoặc link phòng trực tiếp
-        let fetchedTargetLink = directUrl;
-
-        // 3. Ném link vừa bốc được qua API Gtrafficso1 rút gọn
+        // Gọi trực tiếp API Gtrafficso1 rút gọn link
         let apiKey = "dab50e1a937742498aebd160bd7c13d5";
-        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(fetchedTargetLink);
+        let apiUrl = "https://manager.trafficso1.com/api/cong-khai/tao-lien-ket?apikey=" + apiKey + "&url=" + encodeURIComponent(targetLink);
 
         let trafficRes = await fetch(apiUrl);
         let trafficData = await trafficRes.json();
@@ -322,7 +313,7 @@ async function createLink(gameType, gameDisplayName) {
         document.getElementById('successModal').classList.remove('hidden');
 
     } catch (error) {
-        alert("Co loi khi boc link hoac tao link rut gon, vui long thu lai!");
+        alert("Co loi khi tao link rut gon, vui long thu lai!");
         console.error(error);
     } finally {
         btn.innerText = oldText;
